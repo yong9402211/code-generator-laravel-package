@@ -1,0 +1,29 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Http\Controllers\Controller;
+use App\Traits\CRUDTrait;
+{{ use }}
+
+class {{ controllerName }} extends Controller
+{
+    use CRUDTrait;
+
+    protected $service;
+
+    public function __construct({{ serviceName }} $service)
+    {
+        $this->service = $service;
+    }
+
+    public function store({{ storeRequest }} $request)
+    {
+        return parent::store($request);
+    }
+
+    public function update({{ updateRequest }}  $request, $uuid)
+    {
+        return parent::update($request, $uuid);
+    }
+}

@@ -1,0 +1,19 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Traits\ServiceTrait;
+use Illuminate\Http\Request;
+{{ use }}
+
+class {{ serviceName }}
+{
+    use ServiceTrait;
+
+    protected $model;
+
+    public function __construct({{ modelName }} $model)
+    {
+        $this->model = $model;
+    }
+}

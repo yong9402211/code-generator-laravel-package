@@ -1,0 +1,21 @@
+{
+    "name": "yjh94/standard-code-generator",
+    "description": "Auto generate standard code",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Yjh94\\StandardCodeGenerator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "yong940221",
+            "email": "yjh94@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "dev-master"
+    }
+}

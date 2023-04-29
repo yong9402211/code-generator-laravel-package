@@ -1,0 +1,10 @@
+<?php
+
+use {{ useController }};
+use Illuminate\Support\Facades\Route;
+
+$prefix = '{{ routePrefix }}';
+
+Route::group(['prefix' => $prefix], function () {
+    {{ routes }}
+});

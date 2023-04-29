@@ -1,0 +1,86 @@
+{
+    "name": "EmployerUser",
+    "routes": {
+        "login": { "method": "post" },
+        "register": { "method": "post" },
+        "forgot-password": {},
+        "change-password": { "method": "post" },
+        "change-email": { "method": "post" }
+    },
+    "fields": {
+        "uuid": {
+            "type": "uuid",
+            "default": "DB::raw('(UUID())')",
+            "fillable": false,
+            "storable": false,
+            "updatable": false
+        },
+        "work_email": {
+            "type": "string",
+            "size": "100",
+            "rules": "required|email",
+            "fillable": true,
+            "storable": true,
+            "updatable": true
+        },
+        "personal_email": {
+            "type": "string",
+            "size": "100"
+        },
+        "password": {
+            "type": "string",
+            "size": "200",
+            "rules": "required"
+        },
+        "user_role": {
+            "type": "string",
+            "size": "200",
+            "rules": "required"
+        },
+        "role_name": {
+            "type": "string",
+            "size": "45",
+            "rules": "required"
+        },
+        "company_id": {
+            "type": "string",
+            "size": "32",
+            "rules": "required",
+            "foreignKey": ["companys|uuid"]
+        },
+        "ic_number": {
+            "type": "string",
+            "size": "12",
+            "rules": "required"
+        },
+        "dob": {
+            "type": "date"
+        },
+        "phone_no": {
+            "type": "string",
+            "size": "20",
+            "rules": "required"
+        },
+        "company_start_date": {
+            "type": "date"
+        },
+        "first_time_login": {
+            "type": "tinyInteger",
+            "default": 0,
+            "rules": "required"
+        },
+        "position": {
+            "type": "string",
+            "size": "45"
+        },
+        "verification_code": {
+            "type": "string",
+            "size": "200",
+            "rules": "required"
+        },
+        "full_name": {
+            "type": "string",
+            "size": "200"
+        }
+    }
+}

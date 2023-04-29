@@ -1,0 +1,1 @@
+# code-generator-laravel-package
