@@ -14,8 +14,15 @@
             "email": "yjh94@hotmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require-dev": {
         "friendsofphp/php-cs-fixer": "dev-master"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yjh94\\StandardCodeGenerator\\Providers\\StandardCodeGeneratorServiceProvider"
+            ]
+        }
     }
 }
