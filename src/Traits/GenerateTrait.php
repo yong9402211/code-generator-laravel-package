@@ -114,6 +114,7 @@ trait GenerateTrait
 
     protected function createDirectory()
     {
+        $outputDir = config('yjh_generate.output_dir') ?? '';
         $generateType = Str::studly($this->generateType);
 
         $methodDir = 'get' . $generateType . 'Dir';
@@ -123,7 +124,7 @@ trait GenerateTrait
             $methodFolder = 'getFolderName';
         }
 
-        $directory = base_path($this->$methodDir() . '//' . $this->$methodFolder() . '/');
+        $directory = base_path($outputDir . $this->$methodDir() . '//' . $this->$methodFolder() . '/');
         if (!File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }

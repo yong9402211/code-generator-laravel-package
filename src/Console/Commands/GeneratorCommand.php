@@ -9,6 +9,7 @@ use Yjh94\StandardCodeGenerator\Http\Controllers\ModelGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\RequestGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\RouteGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\ServiceGeneratorController;
+use Illuminate\Support\Str;
 
 class GeneratorCommand extends Command
 {
@@ -17,7 +18,7 @@ class GeneratorCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'yjh:code {name}';
+    protected $signature = 'yjh:code {name} {--M|model} {--C|controller} {--R|route} {--S|service} {--MI|migration} {--RS|store-request} {--RU|update-request} {--no-model} {--no-controller} {--no-service} {--no-route} {--no-migration} {--no-store-request} {--no-update-request}';
 
     /**
      * The console command description.
@@ -26,37 +27,62 @@ class GeneratorCommand extends Command
      */
     protected $description = 'Generate standard code';
 
+    protected $optionList = [
+        'model', 'controller', 'service',
+        'route', 'migration',
+        'store-request', 'update-request',
+    ];
+
     /**
      * Execute the console command.
      */
     public function handle()
     {
+
         $name = $this->argument('name');
         $this->info('Creating standard code for ' . $name);
         $setting = $this->readSetting($name);
 
-        $g = new ModelGeneratorController($setting, $name);
-        $g->generate();
-
-        $g = new MigrationGeneratorController($setting, $name);
-        $g->generate();
-
-        $g = new RouteGeneratorController($setting, $name);
-        $g->generate();
-
-        $g = new ControllerGeneratorController($setting, $name);
-        $g->generate();
-
-        $g = new ServiceGeneratorController($setting, $name);
-        $g->generate();
-
-        $g = new RequestGeneratorController($setting, $name);
-        $g->generate('store');
-
-        $g = new RequestGeneratorController($setting, $name);
-        $g->generate('update');
+        $total = $this->autoGenerate($setting, $name, true);
+        if ($total == 0) {
+            $this->autoGenerate($setting, $name, false);
+        }
 
         // TODO: default setting
+    }
+
+    protected function autoGenerate($setting, $name, $checkOption)
+    {
+        $created = 0;
+        foreach ($this->optionList as $option) {
+            if ($checkOption) {
+                if (!$this->option($option))
+                    continue;
+            } else {
+                if ($this->option('no-' . $option))
+                    continue;
+            }
+
+            $optionName = $option;
+            if ($option == 'store-request' || $option == 'update-request') {
+                $optionName = 'request';
+            }
+
+            $method = 'Yjh94\StandardCodeGenerator\Http\Controllers\\' . Str::studly($optionName) . 'GeneratorController';
+            $g = new $method($setting, $name);
+
+            if ($option == 'store-request') {
+                $g->generate('store');
+            } else if ($option == 'update-request') {
+                $g->generate('update');
+            } else {
+                $g->generate();
+            }
+
+            $created++;
+        }
+
+        return $created;
     }
 
     protected function readSetting($name)
