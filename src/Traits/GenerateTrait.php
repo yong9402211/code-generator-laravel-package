@@ -4,16 +4,13 @@ namespace Yjh94\StandardCodeGenerator\Traits;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Yjh94\StandardCodeGenerator\Utils\Indent;
 
 trait GenerateTrait
 {
     use NameTrait;
 
-    protected $className;
-
     protected $tableName;
-
-    protected $outputPath = 'package/standard-code-generator/generates/outputs/';
 
     protected $stubDir = __DIR__ . '/../../stubs/';
 
@@ -25,7 +22,6 @@ trait GenerateTrait
 
     public function __construct(protected $setting = [], protected $name)
     {
-        $this->setClassName($name, $this->generateType);
         $this->setTableName($this->name);
         $this->setSingularStudyName($this->name);
         $this->setPluralStudyName($this->name);
@@ -68,16 +64,6 @@ trait GenerateTrait
     protected function getSingularKebabName()
     {
         return Str::kebab($this->singularStudyName);
-    }
-
-    protected function setClassName($name, $generateType)
-    {
-        $this->className = $name . Str::studly(Str::singular($generateType));
-    }
-
-    protected function getClassName()
-    {
-        return $this->className;
     }
 
     protected function setTableName($name)
@@ -190,8 +176,13 @@ trait GenerateTrait
         return $values;
     }
 
-    protected function convertArray($array)
+    protected function convertArray($array, $indentSize = 8)
     {
+        $indent = Indent::make($indentSize);
+        $endIndentSize = $indentSize - 4;
+        $endIndentSize = ($endIndentSize < 0) ? 0 : $endIndentSize;
+        $endIndent = Indent::make($endIndentSize);
+
         // Split the array into chunks of 3 elements
         $chunks = array_chunk($array, 3);
 
@@ -205,8 +196,7 @@ trait GenerateTrait
         }
 
         // Concatenate the lines into a single string
-        $result = '[' . "\n" . '    ' . implode(',' . "\n" . '    ', $lines) . "\n" . '];';
-
+        $result = (empty($lines)) ? '[];' : '[' . "\n" . $indent . implode(',' . "\n" . $indent, $lines) . "\n" . $endIndent . '];';
         return $result;
     }
 }

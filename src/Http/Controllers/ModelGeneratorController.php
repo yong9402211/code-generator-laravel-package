@@ -19,7 +19,7 @@ class ModelGeneratorController extends Controller
     protected $updatableList = [];
 
     protected $variables = [
-        'namespace', 'class', 'methods',
+        'modelNamespace', 'modelName', 'methods',
         'fillable', 'hidden', 'storable', 'updatable'
     ];
 
@@ -40,26 +40,6 @@ class ModelGeneratorController extends Controller
         $this->create();
     }
 
-    protected function setClassName($name, $generateType)
-    {
-        $this->className = $name;
-    }
-
-    protected function getNamespace()
-    {
-        return 'App\Models';
-    }
-
-    protected function getClass()
-    {
-        return $this->className;
-    }
-
-    protected function getMethods()
-    {
-        return '';
-    }
-
     protected function getHidden()
     {
         return 'protected $hidden = ' . $this->convertArray($this->hiddenList);
@@ -78,5 +58,10 @@ class ModelGeneratorController extends Controller
     protected function getUpdatable()
     {
         return 'protected $updateable = ' . $this->convertArray($this->updatableList);
+    }
+
+    protected function getMethods()
+    {
+        return '';
     }
 }

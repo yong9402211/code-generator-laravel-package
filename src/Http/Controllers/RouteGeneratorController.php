@@ -5,6 +5,7 @@ namespace Yjh94\StandardCodeGenerator\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Yjh94\StandardCodeGenerator\Traits\GenerateTrait;
+use Yjh94\StandardCodeGenerator\Utils\Indent;
 
 class RouteGeneratorController extends Controller
 {
@@ -19,7 +20,7 @@ class RouteGeneratorController extends Controller
     protected $routePrefix = '';
 
     protected $variables = [
-        'useController', 'routePrefix', 'routes',
+        'use', 'routePrefix', 'routes',
     ];
 
     public function generate()
@@ -28,6 +29,7 @@ class RouteGeneratorController extends Controller
         $routes = array_merge($routes, $this->setting['routes']);
 
         $this->routePrefix = Str::kebab($this->getPluralStudyName());
+        $indent = Indent::make(4);
 
         foreach ($routes as $route => $routeInfo) {
             $method = $routeInfo['method'] ?? 'get';
@@ -41,7 +43,7 @@ class RouteGeneratorController extends Controller
             }
 
             $code = "Route::{$method}('$routeName', [{$controller}::class, '{$controllerMethod}']);";
-            $this->routeList[] = $code;
+            $this->routeList[] = $indent . $code;
         }
 
         $this->create();
@@ -76,13 +78,6 @@ class RouteGeneratorController extends Controller
         ];
 
         return $routes;
-
-
-        // Route::get('', [EmployerUserController::class, 'index']);
-        // Route::post('', [EmployerUserController::class, 'store']);
-        // Route::put('{uuid}', [EmployerUserController::class, 'update']);
-        // Route::get('{uuid}', [EmployerUserController::class, 'show']);
-        // Route::delete('{uuid}', [EmployerUserController::class, 'delete']);
     }
 
     protected function getControllerMethodName($route)
@@ -94,14 +89,17 @@ class RouteGeneratorController extends Controller
         return Str::camel($route);
     }
 
-    protected function setClassName($name, $generateType)
+    public function getUse()
     {
-        $this->className = $name;
-    }
+        $useStr = '';
+        $useList = ['Controller'];
+        foreach ($useList as $name) {
+            $namespace = 'get' . $name . 'Namespace';
+            $className = 'get' . $name . 'Name';
+            $useStr .= 'use ' . $this->$namespace() . '\\' .  $this->$className() . ";\n";
+        }
 
-    protected function getUseController()
-    {
-        return 'App\Http\Controllers' . $this->getControllerName();
+        return $useStr;
     }
 
     protected function getRoutePrefix()
