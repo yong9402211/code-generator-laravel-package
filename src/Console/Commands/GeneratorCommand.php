@@ -28,8 +28,6 @@ class GeneratorCommand extends Command
      */
     protected $description = 'Generate standard code';
 
-    protected $inputDir = __DIR__ . '/../../../generates/inputs/';
-
     /**
      * Execute the console command.
      */
@@ -61,15 +59,13 @@ class GeneratorCommand extends Command
         $g->generate('update');
 
         // TODO: default setting
-        // TODO: config file
         // TODO: copy standard trait to project
-        // TODO: input dir
-
     }
 
     protected function readSetting($name)
     {
-        $json = file_get_contents($this->inputDir . $name . '.json');
+        $inputDir = config('yjh_generate.input_dir');
+        $json = file_get_contents($inputDir . $name . '.json');
         return json_decode($json, true);
     }
 }

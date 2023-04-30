@@ -14,9 +14,17 @@ class StandardCodeGeneratorServiceProvider extends ServiceProvider
                 GeneratorCommand::class,
             ]);
         }
+
+        $this->publishes([
+            __DIR__ . '/../config/yjh_generate.php' => config_path('yjh_generate.php'),
+        ]);
     }
 
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/yjh_generate.php',
+            'yjh_generate'
+        );
     }
 }
