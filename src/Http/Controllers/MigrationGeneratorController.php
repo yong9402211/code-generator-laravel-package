@@ -70,11 +70,13 @@ class MigrationGeneratorController extends Controller
         $rules = $columnInfo['rules'] ?? '';
         $storeRules = $columnInfo['storeRules'] ?? '';
         $updateRules = $columnInfo['updateRules'] ?? '';
+        $nullable = $columnInfo['nullable'] ?? true;
         $keyword = 'required';
 
         if (strpos($storeRules, $keyword) !== false) return false;
         if (strpos($updateRules, $keyword) !== false) return false;
         if (strpos($rules, $keyword) !== false) return false;
+        if (!$nullable) return false;
 
         return true;
     }
