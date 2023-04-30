@@ -131,27 +131,27 @@ trait NameTrait
 
     protected function getModelFullName()
     {
-        return $this->getModelNamespace() . $this->getModelName();
+        return $this->getModelNamespace() . '\\' . $this->getModelName();
     }
 
     protected function getControllerFullName()
     {
-        return $this->getControllerNamespace() . $this->getControllerName();
+        return $this->getControllerNamespace() . '\\' .  $this->getControllerName();
     }
 
     protected function getServiceFullName()
     {
-        return $this->getServiceNamespace() . $this->getServiceName();
+        return $this->getServiceNamespace() . '\\' . $this->getServiceName();
     }
 
     protected function getStoreRequestFullName()
     {
-        return $this->getStoreRequestNamespace() . $this->getStoreRequestName();
+        return $this->getStoreRequestNamespace() . '\\' . $this->getStoreRequestName();
     }
 
     protected function getUpdateRequestFullName()
     {
-        return $this->getUpdateRequestNamespace() . $this->getUpdateRequestName();
+        return $this->getUpdateRequestNamespace() . '\\' . $this->getUpdateRequestName();
     }
 
     /**

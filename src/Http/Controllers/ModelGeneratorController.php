@@ -4,6 +4,7 @@ namespace Yjh94\StandardCodeGenerator\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Yjh94\StandardCodeGenerator\Traits\GenerateTrait;
+use Yjh94\StandardCodeGenerator\Utils\Indent;
 
 class ModelGeneratorController extends Controller
 {
@@ -32,7 +33,7 @@ class ModelGeneratorController extends Controller
             $updatable = $columnInfo['updatable'] ?? true;
 
             if ($hidden) $this->hiddenList[] = $column;
-            if ($fillable) $this->fillableList[] = $column;
+            if ($fillable || $storable || $updatable) $this->fillableList[] = $column;
             if ($storable) $this->storableList[] = $column;
             if ($updatable) $this->updatableList[] = $column;
         }
@@ -52,12 +53,12 @@ class ModelGeneratorController extends Controller
 
     protected function getStorable()
     {
-        return 'protected $storetable = ' . $this->convertArray($this->storableList);
+        return 'protected static $storable = ' . $this->convertArray($this->storableList);
     }
 
     protected function getUpdatable()
     {
-        return 'protected $updateable = ' . $this->convertArray($this->updatableList);
+        return 'protected static $updatable = ' . $this->convertArray($this->updatableList);
     }
 
     protected function getMethods()

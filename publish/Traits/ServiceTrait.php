@@ -21,14 +21,14 @@ trait ServiceTrait
         return $this->model->where('uuid', $id)->first();
     }
 
-    public function create(array $data): Collection
+    public function create(array $data)
     {
         $model = $this->model->create($data);
 
         return $model;
     }
 
-    public function updateByUuid(array $data, $uuid): Collection
+    public function updateByUuid(array $data, $uuid)
     {
         $model = $this->model->where('uuid', $uuid)->firstOrFail();
         $model->update($data);

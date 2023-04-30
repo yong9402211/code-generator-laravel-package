@@ -18,7 +18,7 @@ class ControllerGeneratorController extends Controller
     protected $routePrefix = '';
 
     protected $variables = [
-        'namespace', 'use', 'controllerName',
+        'namespace', 'use', 'controllerName', 'modelFullName',
         'serviceName', 'storeRequestName', 'updateRequestName',
     ];
 

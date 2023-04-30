@@ -8,9 +8,14 @@ use App\Traits\CRUDTrait;
 
 class {{ controllerName }} extends Controller
 {
-    use CRUDTrait;
+    use CRUDTrait {
+        store as crudStore;
+        update as crudUpdate;
+    }
 
     protected $service;
+
+    protected $model = '{{ modelFullName }}';
 
     public function __construct({{ serviceName }} $service)
     {
@@ -19,11 +24,11 @@ class {{ controllerName }} extends Controller
 
     public function store({{ storeRequestName }} $request)
     {
-        return parent::store($request);
+        return $this->crudStore($request);
     }
 
     public function update({{ updateRequestName }}  $request, $uuid)
     {
-        return parent::update($request, $uuid);
+        return $this->crudUpdate($request, $uuid);
     }
 }

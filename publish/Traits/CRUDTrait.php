@@ -30,14 +30,14 @@ trait CRUDTrait
 
     public function store(Request $request): JsonResource
     {
-        $models = $this->service->create($request->all());
+        $models = $this->service->create($request->only($this->model::getStorable()));
 
         return new SuccessResource($models);
     }
 
     public function update(Request $request, $uuid): JsonResource
     {
-        $model = $this->service->updateByUuid($request->all(), $uuid);
+        $model = $this->service->updateByUuid($request->only($this->model::getUpdatable()), $uuid);
 
         return new SuccessResource($model);
     }
