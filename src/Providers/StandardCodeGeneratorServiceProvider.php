@@ -17,7 +17,11 @@ class StandardCodeGeneratorServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../config/yjh_generate.php' => config_path('yjh_generate.php'),
-        ]);
+        ], 'yjh-generate-config');
+
+        $this->publishes([
+            __DIR__ . '/../../publish/Traits/' => app_path('Traits'),
+        ], 'yjh-generate-traits');
     }
 
     public function register()

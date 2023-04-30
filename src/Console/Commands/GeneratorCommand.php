@@ -59,7 +59,6 @@ class GeneratorCommand extends Command
         $g->generate('update');
 
         // TODO: default setting
-        // TODO: copy standard trait to project
     }
 
     protected function readSetting($name)

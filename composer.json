@@ -6,7 +6,14 @@
   "autoload": {
     "psr-4": {
       "Yjh94\\StandardCodeGenerator\\": "src/"
-    }
+    },
+    "post-install-cmd": [
+      "php artisan vendor:publish --tag=yjh-generate-config --force",
+      "php artisan vendor:publish --tag=yjh-generate-traits --force"
+    ],
+    "post-update-cmd": [
+      "php artisan vendor:publish --tag=yjh-generate-traits --force"
+    ]
   },
   "authors": [
     {
