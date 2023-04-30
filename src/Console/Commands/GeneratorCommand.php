@@ -3,8 +3,6 @@
 namespace Yjh94\StandardCodeGenerator\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Yjh94\StandardCodeGenerator\Http\Controllers\ControllerGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\MigrationGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\ModelGeneratorController;
@@ -59,6 +57,7 @@ class GeneratorCommand extends Command
         $g->generate('update');
 
         // TODO: default setting
+        // TODO: store and update $request->all() change
     }
 
     protected function readSetting($name)
