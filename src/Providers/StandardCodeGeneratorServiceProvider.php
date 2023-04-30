@@ -20,8 +20,9 @@ class StandardCodeGeneratorServiceProvider extends ServiceProvider
         ], 'yjh-generate-config');
 
         $this->publishes([
+            __DIR__ . '/../../publish/Models/' => app_path('Models'),
             __DIR__ . '/../../publish/Traits/' => app_path('Traits'),
-        ], 'yjh-generate-traits');
+        ], 'yjh-generate-base');
     }
 
     public function register()
