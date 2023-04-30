@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Yjh94\StandardCodeGenerator\Http\Controllers\ControllerGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\MigrationGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\ModelGeneratorController;
+use Yjh94\StandardCodeGenerator\Http\Controllers\RequestGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\RouteGeneratorController;
 use Yjh94\StandardCodeGenerator\Http\Controllers\ServiceGeneratorController;
 
@@ -47,17 +48,29 @@ class GeneratorCommand extends Command
         $g = new RouteGeneratorController($setting, $name);
         $g->generate();
 
+
         $g = new ControllerGeneratorController($setting, $name);
         $g->generate();
 
         $g = new ServiceGeneratorController($setting, $name);
         $g->generate();
 
-        // TODO: controller
-        // TODO: service
+        $g = new RequestGeneratorController($setting, $name);
+        $g->generate('store');
+
+        $g = new RequestGeneratorController($setting, $name);
+        $g->generate('update');
+
+        // TODO: adjust model, migrate, route
         // TODO: request
-        // TODO: with folder name
         // TODO: default setting
+        // TODO: config file
+        // TODO: copy standard trait to project
+        // TODO: foreignKey
+        // TODO: file folder
+        // TODO: file name
+        // TODO: migration storeRules and updateRules
+
     }
 
     protected function readSetting($name)

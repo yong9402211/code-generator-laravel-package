@@ -30,6 +30,8 @@ trait GenerateTrait
         $this->setSingularStudyName($this->name);
         $this->setPluralStudyName($this->name);
         $this->setFolderName($this->setting['folder'] ?? '');
+
+        // var_export($this->getFolderName());
     }
 
     /**
@@ -56,6 +58,16 @@ trait GenerateTrait
     protected function getPluralStudyName()
     {
         return $this->pluralStudyName;
+    }
+
+    protected function getPluralSnakeName()
+    {
+        return Str::snake($this->pluralStudyName);
+    }
+
+    protected function getSingularKebabName()
+    {
+        return Str::kebab($this->singularStudyName);
     }
 
     protected function setClassName($name, $generateType)
@@ -104,14 +116,28 @@ trait GenerateTrait
 
     protected function getFileName()
     {
-        return $this->getClassName();
+        $generateType = Str::studly($this->generateType);
+
+        if ($generateType == 'Request') {
+            $generateType = Str::studly($this->requestType . $generateType);
+        }
+
+        $method = 'get' . $generateType . 'FileName';
+        return $this->$method();
     }
 
     protected function createDirectory()
     {
-        $folderName = Str::pluralStudly($this->generateType);
-        $directory = base_path($this->outputPath . '//' . $folderName . '/');
-        $directory .= $this->getFolderName();
+        $generateType = Str::studly($this->generateType);
+
+        $methodDir = 'get' . $generateType . 'Dir';
+        $methodFolder = 'get' . $generateType . 'FolderName';
+
+        if (!method_exists($this, $methodFolder)) {
+            $methodFolder = 'getFolderName';
+        }
+
+        $directory = base_path('test//' . $this->$methodDir() . '//' . $this->$methodFolder() . '/');
         if (!File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
@@ -140,7 +166,7 @@ trait GenerateTrait
         $output = [];
         $status = 0;
 
-        exec($command, $output, $status);
+        // exec($command, $output, $status);
     }
 
     protected function getVariables()

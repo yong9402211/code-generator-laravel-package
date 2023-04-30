@@ -47,11 +47,6 @@ class RouteGeneratorController extends Controller
         $this->create();
     }
 
-    protected function getFileName()
-    {
-        return Str::kebab($this->getSingularStudyName());
-    }
-
     protected function getControllerName()
     {
         return $this->getSingularStudyName() . 'Controller';

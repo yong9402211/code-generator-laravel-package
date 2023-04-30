@@ -9,25 +9,39 @@ trait NameTrait
     protected $folderName;
     protected $folderNamespace;
 
+    /**
+     * ************************************
+     * Get folder name
+     * ************************************
+     */
+
     protected function setFolderName($folder)
     {
         if (!is_null($folder) && $folder != '') {
-            $folders = explode('/', $folder);
-            $folderName = '';
-            $folderNamespace = '';
-            foreach ($folders as $name) {
-                $name = Str::pluralStudly($name);
+            $names = $this->convertFolderName($folder);
 
-                $folderName .= $name . '/';
-                $folderNamespace .= $name . '\\';
-            }
-
-            $this->folderName = '/' . $folderName;
-            $this->folderNamespace = '\\' . trim($folderNamespace, '\\');
+            $this->folderName = '/' . $names[0];
+            $this->folderNamespace = '\\' . trim($names[1], '\\');
         } else {
             $this->folderName = '';
             $this->folderNamespace = '';
         }
+    }
+
+    protected function convertFolderName($folder)
+    {
+        $folders = explode('/', $folder);
+        $folderName = '';
+        $folderNamespace = '';
+
+        foreach ($folders as $name) {
+            $name = Str::pluralStudly($name);
+
+            $folderName .= $name . '/';
+            $folderNamespace .= $name . '\\';
+        }
+
+        return [$folderName, $folderNamespace];
     }
 
     protected function getFolderName()
@@ -39,6 +53,12 @@ trait NameTrait
     {
         return $this->folderNamespace;
     }
+
+    protected function getRouteFolderName()
+    {
+        return Str::lower($this->getFolderName());
+    }
+
 
     /**
      * ************************************
@@ -71,6 +91,7 @@ trait NameTrait
         return 'Update' . $this->getSingularStudyName() . 'Request';
     }
 
+
     /**
      * ************************************
      * Get namespace
@@ -89,7 +110,7 @@ trait NameTrait
 
     protected function getServiceNamespace()
     {
-        return 'App\Services' . $this->getFolderNamespace();
+        return 'App\Http\Services' . $this->getFolderNamespace();
     }
 
     protected function getStoreRequestNamespace()
@@ -131,5 +152,94 @@ trait NameTrait
     protected function getUpdateRequestFullName()
     {
         return $this->getUpdateRequestNamespace() . $this->getUpdateRequestName();
+    }
+
+    /**
+     * ************************************
+     * Get dir name
+     * ************************************
+     */
+
+    protected function getModelDir()
+    {
+        return 'app/Models';
+    }
+
+    protected function getControllerDir()
+    {
+        return 'app/Http/Controllers';
+    }
+
+    protected function getServiceDir()
+    {
+        return 'app/Http/Services';
+    }
+
+    protected function getRequestDir()
+    {
+        return 'app/Http/Requests';
+    }
+
+    protected function getStoreRequestDir()
+    {
+        return 'app/Http/Requests';
+    }
+
+    protected function getUpdateRequestDir()
+    {
+        return 'app/Http/Requests';
+    }
+
+    protected function getMigrationDir()
+    {
+        return 'database/migrations';
+    }
+
+    protected function getRouteDir()
+    {
+        return 'routes/api';
+    }
+
+
+
+    /**
+     * ************************************
+     * Get file name
+     * ************************************
+     */
+
+    protected function getModelFileName()
+    {
+        return $this->getModelName();
+    }
+
+    protected function getControllerFileName()
+    {
+        return $this->getControllerName();
+    }
+
+    protected function getServiceFileName()
+    {
+        return $this->getServiceName();
+    }
+
+    protected function getStoreRequestFileName()
+    {
+        return $this->getStoreRequestName();
+    }
+
+    protected function getUpdateRequestFileName()
+    {
+        return $this->getUpdateRequestName();
+    }
+
+    protected function getMigrationFileName()
+    {
+        return date('Y_m_d_his') . '_create_ ' . $this->getPluralSnakeName() . '_table';
+    }
+
+    protected function getRouteFileName()
+    {
+        return $this->getSingularKebabName();
     }
 }
