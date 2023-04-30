@@ -17,12 +17,12 @@ class {{ controllerName }} extends Controller
         $this->service = $service;
     }
 
-    public function store({{ storeRequest }} $request)
+    public function store({{ storeRequestName }} $request)
     {
         return parent::store($request);
     }
 
-    public function update({{ updateRequest }}  $request, $uuid)
+    public function update({{ updateRequestName }}  $request, $uuid)
     {
         return parent::update($request, $uuid);
     }

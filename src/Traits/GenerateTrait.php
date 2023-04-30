@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 trait GenerateTrait
 {
+    use ClassNameTrait;
+
     protected $className;
 
     protected $tableName;
@@ -132,7 +134,7 @@ trait GenerateTrait
 
     protected function beautifyCode($filePath)
     {
-        $command = "package/standard-code-generator/vendor/bin/php-cs-fixer fix $filePath --rules=@PhpCsFixer";
+        $command = "vendor/bin/php-cs-fixer fix $filePath --rules=@PhpCsFixer";
         $output = [];
         $status = 0;
 
