@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Collection;
 
 trait ServiceTrait
 {
-    public function getAll(): Collection
+    public function getAll()
     {
         return $this->model->all();
     }
 
-    public function getById($id): Collection
+    public function getById($id)
     {
         return $this->model->find($id);
     }
 
-    public function getByUuid($id): Collection
+    public function getByUuid($id)
     {
         return $this->model->where('uuid', $id)->first();
     }
@@ -43,7 +43,7 @@ trait ServiceTrait
         return $result;
     }
 
-    public function deleteByUuid($uuid): Collection
+    public function deleteByUuid($uuid)
     {
         $model = $this->model->where('uuid', $uuid)->firstOrFail();
         $model->delete();

@@ -22,6 +22,7 @@ class StandardCodeGeneratorServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../publish/Models/' => app_path('Models'),
             __DIR__ . '/../../publish/Traits/' => app_path('Traits'),
+            __DIR__ . '/../../publish/Resources/' => app_path('Http/Resources'),
         ], 'yjh-generate-base');
     }
 
