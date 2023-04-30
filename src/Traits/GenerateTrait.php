@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 trait GenerateTrait
 {
-    use ClassNameTrait;
+    use NameTrait;
 
     protected $className;
 
@@ -29,6 +29,7 @@ trait GenerateTrait
         $this->setTableName($this->name);
         $this->setSingularStudyName($this->name);
         $this->setPluralStudyName($this->name);
+        $this->setFolderName($this->setting['folder'] ?? '');
     }
 
     /**
@@ -97,6 +98,7 @@ trait GenerateTrait
         $fileName = $this->getFileName();
 
         $filePath = $directory . '/' . $fileName . '.php';
+        // dd($filePath);
         return $filePath;
     }
 
@@ -109,7 +111,7 @@ trait GenerateTrait
     {
         $folderName = Str::pluralStudly($this->generateType);
         $directory = base_path($this->outputPath . '//' . $folderName . '/');
-
+        $directory .= $this->getFolderName();
         if (!File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
