@@ -57,7 +57,6 @@ class GeneratorCommand extends Command
         $g->generate('update');
 
         // TODO: default setting
-        // TODO: store and update $request->all() change
     }
 
     protected function readSetting($name)
