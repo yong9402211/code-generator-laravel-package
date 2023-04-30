@@ -48,7 +48,6 @@ class GeneratorCommand extends Command
         $g = new RouteGeneratorController($setting, $name);
         $g->generate();
 
-
         $g = new ControllerGeneratorController($setting, $name);
         $g->generate();
 
@@ -64,7 +63,7 @@ class GeneratorCommand extends Command
         // TODO: default setting
         // TODO: config file
         // TODO: copy standard trait to project
-        // TODO: foreignKey
+        // TODO: input dir
 
     }
 

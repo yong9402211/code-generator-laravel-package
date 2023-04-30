@@ -1,20 +1,9 @@
 {
   "folder": "Employer",
   "routes": {
-    "login": { "method": "post" },
-    "register": { "method": "post" },
-    "forgot-password": {},
-    "change-password": { "method": "post" },
-    "change-email": { "method": "post" }
+    "test-save": { "method": "post" }
   },
   "fields": {
-    "uuid": {
-      "type": "uuid",
-      "default": "DB::raw('(UUID())')",
-      "fillable": false,
-      "storable": false,
-      "updatable": false
-    },
     "work_email": {
       "type": "string",
       "size": "100",
@@ -43,10 +32,10 @@
       "rules": "required"
     },
     "company_id": {
-      "type": "string",
+      "type": "foreign",
       "size": "32",
       "rules": "required",
-      "foreignKey": ["companys|uuid"]
+      "foreignKey": ["companies", "uuid"]
     },
     "ic_number": {
       "type": "string",

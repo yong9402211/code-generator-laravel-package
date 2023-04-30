@@ -1,0 +1,11 @@
+{
+  "folder": "Common",
+  "routes": {},
+  "fields": {
+    "company_name": {
+      "type": "string",
+      "size": "150",
+      "rules": "required"
+    }
+  }
+}

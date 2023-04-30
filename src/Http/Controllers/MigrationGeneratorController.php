@@ -21,17 +21,33 @@ class MigrationGeneratorController extends Controller
         'up', 'down',
     ];
 
+    protected $skips = ['id', 'uuid'];
+
     public function generate()
     {
+        $indent = Indent::make(12);
         $columnList[] = Indent::make(8) . '$table->id();';
+        $columnList[] = "{$indent}\$table->uuid('uuid')->default(DB::raw('(UUID())'));";
 
         foreach ($this->setting['fields'] as $column => $columnInfo) {
+            if (in_array($column, $this->skips))
+                continue;
+
             $type = $columnInfo['type'] ?? 'string';
             $size = $columnInfo['size'] ?? 100;
             $default = $columnInfo['default'] ?? null;
 
             if ($type == 'string') {
                 $code = "\$table->{$type}('{$column}', {$size})";
+            } else if ($type == 'foreign') {
+                $foreignKey = $columnInfo['foreignKey'] ?? [];
+                $referenceTable = $foreignKey[0] ?? '';
+                $referenceKey = $foreignKey[1] ?? 'uuid';
+
+                if ($referenceTable == '')
+                    $referenceTable = Str::plural(Str::replace('_id', '', $column));
+
+                $code = "\$table->{$type}('{$column}')->references('{$referenceKey}')->on('{$referenceTable}')";
             } else {
                 $code = "\$table->{$type}('{$column}')";
             }
@@ -39,11 +55,11 @@ class MigrationGeneratorController extends Controller
             if ($this->isNullable($columnInfo)) $code .= '->nullable()';
             if ($default !== null) $code .= '->default(' . $default . ')';
 
-            $columnList[] = Indent::make(12) . $code . ';';
+            $columnList[] = $indent . $code . ';';
         }
 
-        $columnList[] = Indent::make(12) . '$table->timestamps();';
-        $columnList[] = Indent::make(12) . '$table->softDeletes();';
+        $columnList[] = $indent . '$table->timestamps();';
+        $columnList[] = $indent . '$table->softDeletes();';
 
         $this->columnList = $columnList;
         $this->create();
