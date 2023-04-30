@@ -96,7 +96,7 @@ trait GenerateTrait
         $fileName = $this->getFileName();
 
         $filePath = $directory . '/' . $fileName . '.php';
-        // dd($filePath);
+
         return $filePath;
     }
 
@@ -123,7 +123,7 @@ trait GenerateTrait
             $methodFolder = 'getFolderName';
         }
 
-        $directory = base_path('test//' . $this->$methodDir() . '//' . $this->$methodFolder() . '/');
+        $directory = base_path($this->$methodDir() . '//' . $this->$methodFolder() . '/');
         if (!File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
