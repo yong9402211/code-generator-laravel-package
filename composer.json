@@ -10,20 +10,15 @@
   },
   "scripts": {
     "pre-install-cmd": [
-      "php artisan vendor:publish --tag=yjh-generate-config --force"
+      "@php artisan vendor:publish --tag=yjh-generate-config --force"
     ],
     "post-install-cmd": [
-      "php artisan vendor:publish --tag=yjh-generate-base --force",
-      "php artisan optimize"
+      "@php artisan vendor:publish --tag=yjh-generate-base --force",
+      "@php artisan optimize"
     ],
     "post-update-cmd": [
-      "php artisan vendor:publish --tag=yjh-generate-base --force",
-      "php artisan optimize"
-    ],
-    "post-autoload-dump": [
-      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-      "@php artisan package:discover --ansi",
-      "@php artisan vendor:publish --tag=yjh-generate-config --force"
+      "@php artisan vendor:publish --tag=yjh-generate-base --force",
+      "@php artisan optimize"
     ]
   },
   "authors": [
