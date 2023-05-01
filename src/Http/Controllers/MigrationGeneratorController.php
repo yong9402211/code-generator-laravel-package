@@ -26,8 +26,8 @@ class MigrationGeneratorController extends Controller
     public function generate()
     {
         $indent = Indent::make(12);
-        $columnList[] = Indent::make(8) . '$table->id();';
-        $columnList[] = "{$indent}\$table->uuid('uuid')->default(DB::raw('(UUID())'));";
+        // $columnList[] = Indent::make(8) . '$table->id();';
+        $columnList[] = Indent::make(8) . "\$table->uuid('uuid')->default(DB::raw('(UUID())'))->primary();";
 
         foreach ($this->setting['fields'] as $column => $columnInfo) {
             if (in_array($column, $this->skips))
@@ -37,19 +37,21 @@ class MigrationGeneratorController extends Controller
             $size = $columnInfo['size'] ?? 100;
             $default = $columnInfo['default'] ?? null;
 
+            $code = '';
+            $subCode = '';
+
             if ($type == 'string') {
                 $code = "\$table->{$type}('{$column}', {$size})";
             } else if ($type == 'foreign') {
-                // $foreignKey = $columnInfo['foreignKey'] ?? [];
-                // $referenceTable = $foreignKey[0] ?? '';
-                // $referenceKey = $foreignKey[1] ?? 'uuid';
+                $foreignKey = $columnInfo['foreignKey'] ?? [];
+                $referenceTable = $foreignKey[0] ?? '';
+                $referenceKey = $foreignKey[1] ?? 'uuid';
 
-                // if ($referenceTable == '')
-                //     $referenceTable = Str::plural(Str::replace('_id', '', $column));
+                if ($referenceTable == '')
+                    $referenceTable = Str::plural(Str::replace('_id', '', $column));
 
-                // $code = "\$table->{$type}('{$column}')->references('{$referenceKey}')->on('{$referenceTable}')";
-
-                $code = "\$table->string('{$column}', 36)";
+                $code = "\$table->char('{$column}', 36)";
+                $subCode = "\$table->{$type}('{$column}')->references('{$referenceKey}')->on('{$referenceTable}');";
             } else {
                 $code = "\$table->{$type}('{$column}')";
             }
@@ -58,6 +60,9 @@ class MigrationGeneratorController extends Controller
             if ($default !== null) $code .= '->default(' . $default . ')';
 
             $columnList[] = $indent . $code . ';';
+
+            if ($subCode != '')
+                $columnList[] = $indent . $subCode;
         }
 
         $columnList[] = $indent . '$table->timestamps();';
