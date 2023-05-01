@@ -2,13 +2,10 @@
 
 namespace {{ modelNamespace }};
 
-use App\Traits\BaseModelTrait;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class {{ modelName }} extends Model
+class {{ modelName }} extends BaseModel
 {
-    use BaseModelTrait;
-
     {{ fillable }}
 
     {{ hidden }}
