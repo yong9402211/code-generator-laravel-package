@@ -40,14 +40,16 @@ class MigrationGeneratorController extends Controller
             if ($type == 'string') {
                 $code = "\$table->{$type}('{$column}', {$size})";
             } else if ($type == 'foreign') {
-                $foreignKey = $columnInfo['foreignKey'] ?? [];
-                $referenceTable = $foreignKey[0] ?? '';
-                $referenceKey = $foreignKey[1] ?? 'uuid';
+                // $foreignKey = $columnInfo['foreignKey'] ?? [];
+                // $referenceTable = $foreignKey[0] ?? '';
+                // $referenceKey = $foreignKey[1] ?? 'uuid';
 
-                if ($referenceTable == '')
-                    $referenceTable = Str::plural(Str::replace('_id', '', $column));
+                // if ($referenceTable == '')
+                //     $referenceTable = Str::plural(Str::replace('_id', '', $column));
 
-                $code = "\$table->{$type}('{$column}')->references('{$referenceKey}')->on('{$referenceTable}')";
+                // $code = "\$table->{$type}('{$column}')->references('{$referenceKey}')->on('{$referenceTable}')";
+
+                $code = "\$table->string('{$column}', 36)";
             } else {
                 $code = "\$table->{$type}('{$column}')";
             }

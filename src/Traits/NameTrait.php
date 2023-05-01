@@ -54,6 +54,11 @@ trait NameTrait
         return $this->folderNamespace;
     }
 
+    protected function getMigrationFolderName()
+    {
+        return '';
+    }
+
     protected function getRouteFolderName()
     {
         return Str::lower($this->getFolderName());
@@ -235,7 +240,7 @@ trait NameTrait
 
     protected function getMigrationFileName()
     {
-        return date('Y_m_d_his') . '_create_ ' . $this->getPluralSnakeName() . '_table';
+        return date('Y_m_d_his') . '_create_' . $this->getPluralSnakeName() . '_table';
     }
 
     protected function getRouteFileName()
