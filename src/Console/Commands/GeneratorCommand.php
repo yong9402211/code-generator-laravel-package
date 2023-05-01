@@ -38,7 +38,6 @@ class GeneratorCommand extends Command
      */
     public function handle()
     {
-
         $name = $this->argument('name');
         $this->info('Creating standard code for ' . $name);
         $setting = $this->readSetting($name);
@@ -48,7 +47,10 @@ class GeneratorCommand extends Command
             $this->autoGenerate($setting, $name, false);
         }
 
+        // TODO: model generate foreign class
         // TODO: default setting
+        // TODO: validation number
+        // TODO: decimal type, more type
     }
 
     protected function autoGenerate($setting, $name, $checkOption)

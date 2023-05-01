@@ -2,13 +2,12 @@
 
 namespace {{ modelNamespace }};
 
-use App\Models\BaseModel;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\BaseModelTrait;
+use Illuminate\Database\Eloquent\Model;
 
-class {{ modelName }} extends BaseModel
+class {{ modelName }} extends Model
 {
-    use HasFactory, SoftDeletes;
+    use BaseModelTrait;
 
     {{ fillable }}
 
