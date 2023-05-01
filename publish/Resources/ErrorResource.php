@@ -7,13 +7,16 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ErrorResource extends JsonResource
 {
+    protected $httpCode;
     protected $responseCode;
     protected $message;
 
-    public function __construct($resource, $message = 'Failed to process request.', $responseCode = 500)
+    public function __construct($resource, $message = 'Failed to process request.', $responseCode = 2000, $httpCode = 500)
     {
+        $this->httpCode = $httpCode;
         $this->responseCode = $responseCode;
         $this->message = $message;
+
         parent::__construct($resource);
     }
 
@@ -26,6 +29,7 @@ class ErrorResource extends JsonResource
     {
         return [
             'success' => false,
+            'http_code' => $this->httpCode,
             'response_code' => $this->responseCode,
             'message' => $this->message,
             'data' => $this->resource,

@@ -7,11 +7,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SuccessResource extends JsonResource
 {
+    protected $httpCode;
     protected $responseCode;
     protected $message;
 
-    public function __construct($resource, $message = 'Request processed successfully.', $responseCode = 200)
+    public function __construct($resource, $message = 'Request processed successfully.', $responseCode = 1000, $httpCode = 200)
     {
+        $this->httpCode = $httpCode;
         $this->responseCode = $responseCode;
         $this->message = $message;
 
@@ -27,6 +29,7 @@ class SuccessResource extends JsonResource
     {
         return [
             'success' => true,
+            'http_code' => $this->httpCode,
             'response_code' => $this->responseCode,
             'message' => $this->message,
             'data' => $this->resource,
