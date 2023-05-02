@@ -23,6 +23,25 @@ class MigrationGeneratorController extends Controller
 
     protected $skips = ['id', 'uuid'];
 
+    protected $withSizes = [
+        'char', 'string'
+    ];
+
+    protected $withValues = [
+        'enum', 'set'
+    ];
+
+    protected $withPrecisions = [
+        'dateTimeTz', 'dateTime', 'softDeletesTz',
+        'softDeletes', 'timeTz', 'time',
+        'timestampTz', 'timestamp',
+    ];
+
+    protected $withDecimals = [
+        'decimal', 'double', 'float',
+        'unsignedDecimal', ''
+    ];
+
     public function generate()
     {
         $indent = Indent::make(12);
@@ -40,8 +59,13 @@ class MigrationGeneratorController extends Controller
             $code = '';
             $subCode = '';
 
-            if ($type == 'string') {
+            if (in_array($type, $this->withSizes) || in_array($type, $this->withDecimals) || in_array($type, $this->withPrecisions)) {
                 $code = "\$table->{$type}('{$column}', {$size})";
+            } else if (in_array($type, $this->withValues)) {
+                $options = $columnInfo['options'] ?? [];
+                $options = $this->convertArray($options, 16);
+                $options = str_replace(';', '', $options);
+                $code = "\$table->{$type}('{$column}', {$options})";
             } else if ($type == 'foreign') {
                 $foreignKey = $columnInfo['foreignKey'] ?? [];
                 $referenceTable = $foreignKey[0] ?? '';
