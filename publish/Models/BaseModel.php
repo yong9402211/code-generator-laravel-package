@@ -10,6 +10,10 @@ class BaseModel extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     protected static $storable = [];
 
     protected static $updatable = [];

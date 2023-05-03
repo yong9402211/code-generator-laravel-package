@@ -47,9 +47,7 @@ class GeneratorCommand extends Command
             $this->autoGenerate($setting, $name, false);
         }
 
-        // TODO: model generate foreign class
         // TODO: default setting
-        // TODO: validation number
         // TODO: decimal type, more type
     }
 
