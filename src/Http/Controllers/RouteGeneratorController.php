@@ -65,14 +65,14 @@ class RouteGeneratorController extends Controller
                 'method' => 'post',
             ],
             'update' => [
-                'route' => '{uuid}',
+                'route' => '{id}',
                 'method' => 'put',
             ],
             'show' => [
-                'route' => '{uuid}',
+                'route' => '{id}',
             ],
             'delete' => [
-                'route' => '{uuid}',
+                'route' => '{id}',
                 'method' => 'delete',
             ],
         ];
