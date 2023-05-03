@@ -39,14 +39,14 @@ class MigrationGeneratorController extends Controller
 
     protected $withDecimals = [
         'decimal', 'double', 'float',
-        'unsignedDecimal', ''
+        'unsignedDecimal',
     ];
 
     public function generate()
     {
         $indent = Indent::make(12);
         // $columnList[] = Indent::make(8) . '$table->id();';
-        $columnList[] = Indent::make(8) . "\$table->uuid('uuid')->default(DB::raw('(UUID())'))->primary();";
+        $columnList[] = Indent::make(8) . "\$table->uuid('id')->default(DB::raw('(UUID())'))->primary();";
 
         foreach ($this->setting['fields'] as $column => $columnInfo) {
             if (in_array($column, $this->skips))
