@@ -16,11 +16,6 @@ trait ServiceTrait
         return $this->model->find($id);
     }
 
-    public function getByUuid($id)
-    {
-        return $this->model->where('uuid', $id)->first();
-    }
-
     public function create(array $data)
     {
         $model = $this->model->create($data);
@@ -28,32 +23,32 @@ trait ServiceTrait
         return $model;
     }
 
-    public function updateByUuid(array $data, $uuid)
+    public function updateById(array $data, $id)
     {
-        $model = $this->model->where('uuid', $uuid)->firstOrFail();
+        $model = $this->model->where('id', $id)->firstOrFail();
         $model->update($data);
 
         return $model;
     }
 
-    public function updateWithUuid(array $data, $uuid): int
+    public function updateWithId(array $data, $id): int
     {
-        $result = $this->model->where('uuid', $uuid)->update($data);
+        $result = $this->model->where('id', $id)->update($data);
 
         return $result;
     }
 
-    public function deleteByUuid($uuid)
+    public function deleteById($id)
     {
-        $model = $this->model->where('uuid', $uuid)->firstOrFail();
+        $model = $this->model->where('id', $id)->firstOrFail();
         $model->delete();
 
         return $model;
     }
 
-    public function deleteWithUuid($uuid): int
+    public function deleteWithId($id): int
     {
-        $model = $this->model->where('uuid', $uuid)->delete();
+        $model = $this->model->where('id', $id)->delete();
         return $model;
     }
 }

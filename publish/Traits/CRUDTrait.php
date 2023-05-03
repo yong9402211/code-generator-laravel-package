@@ -23,7 +23,7 @@ trait CRUDTrait
 
     public function show($uuid): JsonResource
     {
-        $model = $this->service->getByUuid($uuid);
+        $model = $this->service->getById($uuid);
 
         return new SuccessResource($model);
     }
@@ -35,16 +35,16 @@ trait CRUDTrait
         return new SuccessResource($models);
     }
 
-    public function update(Request $request, $uuid): JsonResource
+    public function update(Request $request, $id): JsonResource
     {
-        $model = $this->service->updateByUuid($request->only($this->model::getUpdatable()), $uuid);
+        $model = $this->service->updateById($request->only($this->model::getUpdatable()), $id);
 
         return new SuccessResource($model);
     }
 
-    public function delete($uuid): JsonResource
+    public function delete($id): JsonResource
     {
-        $model = $this->service->deleteWithUuid($uuid);
+        $model = $this->service->deleteWithId($id);
 
         return new SuccessResource($model);
     }
