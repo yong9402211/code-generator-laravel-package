@@ -27,8 +27,8 @@ class {{ controllerName }} extends Controller
         return $this->crudStore($request);
     }
 
-    public function update({{ updateRequestName }}  $request, $uuid)
+    public function update({{ updateRequestName }}  $request, $id)
     {
-        return $this->crudUpdate($request, $uuid);
+        return $this->crudUpdate($request, $id);
     }
 }

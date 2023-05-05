@@ -21,9 +21,9 @@ trait CRUDTrait
         return new SuccessResource($models);
     }
 
-    public function show($uuid): JsonResource
+    public function show($id): JsonResource
     {
-        $model = $this->service->getById($uuid);
+        $model = $this->service->getById($id);
 
         return new SuccessResource($model);
     }
